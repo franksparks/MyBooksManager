@@ -39,7 +39,7 @@ def clear_fields():
     author.set("")
     editorial.set("")
     year.set("")
-    comments.set("")
+    comments_field.delete(1.0, END)
     tkMessageBox.showerror(message="All fields were cleared", title="Info")
 
 
@@ -51,7 +51,7 @@ def show_about():
 
 def create():
     data = [
-        (title.get(), author.get(), editorial.get(), year.get(), comments.get())
+        (title.get(), author.get(), editorial.get(), year.get(), comments_field.get(1.0, END))
     ]
 
     my_connection = sqlite3.connect("My Books Manager")
@@ -79,12 +79,12 @@ def read():
         author.set(item[2])
         editorial.set(item[3])
         year.set(item[4])
-        comments.set(item[5])
+        comments_field.insert(1.0, item[5])
 
 
 def update():
     data = [
-        (title.get(), author.get(), editorial.get(), year.get(), comments.get(), book_id.get())
+        (title.get(), author.get(), editorial.get(), year.get(), comments_field.get(1.0, END), book_id.get())
     ]
 
     my_connection = sqlite3.connect("My Books Manager")
@@ -172,8 +172,6 @@ year_field.grid(row=4, column=1, sticky="w", padx=10, pady=10, columnspan=3)
 
 comments_label = Label(my_frame, text="Comentarios: ", fg="black")
 comments_label.grid(row=5, column=0, sticky="w", padx=10, pady=10)
-comments = StringVar()
-# Revisar la variable asociada a este valor
 comments_field = Text(my_frame, width=40,  height=5)
 comments_field.grid(row=5, column=1, padx=10, pady=10, columnspan=3)
 
