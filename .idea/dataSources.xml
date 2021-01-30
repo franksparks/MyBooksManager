@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="My Books Manager" uuid="95a1b272-cfa0-4727-9cb4-23c36e4b5c71">
+    <data-source source="LOCAL" name="My Books Manager" uuid="e6efd569-1dfc-4505-bf8b-b78daee9a230">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/My Books Manager</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/../My Books Manager</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>

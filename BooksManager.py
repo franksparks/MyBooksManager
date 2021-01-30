@@ -1,5 +1,5 @@
-from Tkinter import *
-import tkMessageBox
+from tkinter import *
+from tkinter import messagebox
 import sqlite3
 
 root = Tk()
@@ -12,22 +12,22 @@ def connect():
         my_connection = sqlite3.connect("My Books Manager")
         my_cursor = my_connection.cursor()
         my_cursor.execute('''
-			CREATE TABLE MYBOOKS (
-			BOOK_ID INTEGER PRIMARY KEY AUTOINCREMENT, 
-			TITLE VARCHAR(100), 
-			AUTHOR VARCHAR(50), 
-			EDITORIAL VARCHAR(50),
-			YEAR VARCHAR(4),
-			COMMENTS VARCHAR(100))
-			''')
+            CREATE TABLE MYBOOKS (
+            BOOK_ID INTEGER PRIMARY KEY AUTOINCREMENT, 
+            TITLE VARCHAR(100), 
+            AUTHOR VARCHAR(50), 
+            EDITORIAL VARCHAR(50),
+            YEAR VARCHAR(4),
+            COMMENTS VARCHAR(100))
+            ''')
         my_connection.commit()
-        tkMessageBox.showinfo(message="Database successfully created", title="Info")
+        messagebox.showinfo(message="Database successfully created", title="Info")
     except Exception:
-        tkMessageBox.showerror(message="The Database already exists", title="Warning")
+        messagebox.showinfo(message="The Database already exists", title="Warning")
 
 
 def close():
-    answer = tkMessageBox.askquestion(message="Close the app?", title="Warning")
+    answer = messagebox.askquestion(message="Close the app?", title="Warning")
 
     if answer == "yes":
         root.destroy()
@@ -40,11 +40,11 @@ def clear_fields():
     editorial.set("")
     year.set("")
     comments_field.delete(1.0, END)
-    tkMessageBox.showerror(message="All fields were cleared", title="Info")
+    messagebox.showinfo(message="All fields were cleared", title="Info")
 
 
 def show_about():
-    tkMessageBox.showinfo(message="Version: 1.0\nAuthor: Ferran Bals", title="About")
+    messagebox.showinfo(message="Version: 1.0\nAuthor: Ferran Bals", title="About")
 
 
 # ----------CRUD----------
@@ -59,7 +59,7 @@ def create():
     my_cursor.executemany("INSERT INTO MYBOOKS VALUES (NULL, ?, ?, ?, ?, ?)", data)
     my_connection.commit()
 
-    tkMessageBox.showerror(message="Book added successfully", title="Info")
+    messagebox.showinfo(message="Book added successfully", title="Info")
 
 
 def read():
@@ -90,10 +90,10 @@ def update():
     my_connection = sqlite3.connect("My Books Manager")
     my_cursor = my_connection.cursor()
     my_cursor.executemany(
-        "UPDATE MYBOOKS SET TITLE=?, AUTHOR=?, EDITORIAL=?, YEAR=?, COMMENTS=? WHERE ID=?", data)
+        "UPDATE MYBOOKS SET TITLE=?, AUTHOR=?, EDITORIAL=?, YEAR=?, COMMENTS=? WHERE BOOK_ID=?", data)
     my_connection.commit()
 
-    tkMessageBox.showerror(message="Book updated successfully", title="Info")
+    messagebox.showinfo(message="Book updated successfully", title="Info")
 
 
 def delete():
@@ -106,7 +106,7 @@ def delete():
     my_cursor.execute("DELETE FROM MYBOOKS WHERE BOOK_ID=?", data)
     my_connection.commit()
 
-    tkMessageBox.showerror(message="Book removed successfully", title="Info")
+    messagebox.showinfo(message="Book removed successfully", title="Info")
 
 
 # ----------UpperMenu----------
@@ -140,37 +140,37 @@ my_frame.pack()
 my_frame.config(width="650", height="650")
 
 # ----------Fields----------
-id_label = Label(my_frame, text="ID: ", fg="black")
+id_label = Label(my_frame, text="ID: ")
 id_label.grid(row=0, column=0, sticky="w", padx=10, pady=10)
 book_id = StringVar()
 id_field = Entry(my_frame, textvariable=book_id)
 id_field.grid(row=0, column=1, sticky="w", padx=10, pady=10, columnspan=3)
 
-title_label = Label(my_frame, text="Titulo: ", fg="black")
+title_label = Label(my_frame, text="Titulo: ")
 title_label.grid(row=1, column=0, sticky="w", padx=10, pady=10)
 title = StringVar()
 title_field = Entry(my_frame, textvariable=title)
 title_field.grid(row=1, column=1, sticky="w", padx=10, pady=10, columnspan=3)
 
-author_label = Label(my_frame, text="Autor: ", fg="black")
+author_label = Label(my_frame, text="Autor: ")
 author_label.grid(row=2, column=0, sticky="w", padx=10, pady=10)
 author = StringVar()
 author_field = Entry(my_frame, textvariable=author, fg="red", justify="right")
 author_field.grid(row=2, column=1, sticky="w", padx=10, pady=10, columnspan=3)
 
-editorial_label = Label(my_frame, text="Editorial: ", fg="black")
+editorial_label = Label(my_frame, text="Editorial: ")
 editorial_label.grid(row=3, column=0, sticky="w", padx=10, pady=10)
 editorial = StringVar()
 editorial_field = Entry(my_frame, textvariable=editorial)
 editorial_field.grid(row=3, column=1, sticky="w", padx=10, pady=10, columnspan=3)
 
-year_label = Label(my_frame, text="Anyo publicacion: ", fg="black")
+year_label = Label(my_frame, text="Anyo publicacion: ")
 year_label.grid(row=4, column=0, sticky="w", padx=10, pady=10)
 year = StringVar()
 year_field = Entry(my_frame, textvariable=year)
 year_field.grid(row=4, column=1, sticky="w", padx=10, pady=10, columnspan=3)
 
-comments_label = Label(my_frame, text="Comentarios: ", fg="black")
+comments_label = Label(my_frame, text="Comentarios: ")
 comments_label.grid(row=5, column=0, sticky="w", padx=10, pady=10)
 comments_field = Text(my_frame, width=40,  height=5)
 comments_field.grid(row=5, column=1, padx=10, pady=10, columnspan=3)
@@ -192,6 +192,8 @@ button_delete = Button(my_frame_two, text="Delete", width=6, command=lambda: del
 button_delete.grid(row=0, column=3, sticky="e")
 button_connect = Button(my_frame_two, text="Connect", width=6, command=lambda: connect())
 button_connect.grid(row=1, column=0, sticky="e")
+button_clear = Button(my_frame_two, text="Clear", width=6, command=lambda: clear_fields())
+button_clear.grid(row=1, column=1, sticky="e")
 
 # ----------MainLoop----------
 root.mainloop()
